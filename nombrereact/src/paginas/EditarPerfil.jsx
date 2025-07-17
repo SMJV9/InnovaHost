@@ -10,10 +10,12 @@ const EditarPerfil = () => {
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
     const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: ''
+        nombre: '',
+        correo: '',
+        telefono: '',
+        direccion: '',
+        clave: '',
+        clave_confirmation: ''
     });
 
     usePageTitle('Editar Perfil - InnovaHost');
@@ -22,8 +24,10 @@ const EditarPerfil = () => {
         if (user) {
             setFormData(prev => ({
                 ...prev,
-                name: user.name || '',
-                email: user.email || ''
+                nombre: user.nombre || user.name || '',
+                correo: user.correo || user.email || '',
+                telefono: user.telefono || '',
+                direccion: user.direccion || ''
             }));
         }
     }, [user]);
@@ -43,7 +47,7 @@ const EditarPerfil = () => {
         setSuccess('');
 
         // Validar contraseñas si se están cambiando
-        if (formData.password && formData.password !== formData.password_confirmation) {
+        if (formData.clave && formData.clave !== formData.clave_confirmation) {
             setError('Las contraseñas no coinciden');
             setLoading(false);
             return;
@@ -51,17 +55,24 @@ const EditarPerfil = () => {
 
         try {
             const updateData = {
-                name: formData.name,
-                email: formData.email
+                nombre: formData.nombre,
+                correo: formData.correo,
+                telefono: formData.telefono,
+                direccion: formData.direccion
             };
 
             // Solo incluir contraseña si se está cambiando
-            if (formData.password) {
-                updateData.password = formData.password;
-                updateData.password_confirmation = formData.password_confirmation;
+            if (formData.clave) {
+                updateData.clave = formData.clave;
+                updateData.clave_confirmation = formData.clave_confirmation;
             }
 
-            const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/user/profile`, {
+            // Determinar la URL del endpoint según el tipo de usuario
+            const endpoint = user.user_type === 'cliente' || user.telefono !== undefined 
+                ? '/api/cliente/profile' 
+                : '/api/user/profile';
+
+            const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${endpoint}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -78,8 +89,8 @@ const EditarPerfil = () => {
                 // Limpiar campos de contraseña
                 setFormData(prev => ({
                     ...prev,
-                    password: '',
-                    password_confirmation: ''
+                    clave: '',
+                    clave_confirmation: ''
                 }));
             } else {
                 setError(data.message || 'Error al actualizar el perfil');
@@ -176,14 +187,14 @@ const EditarPerfil = () => {
                     <form onSubmit={handleSubmit} className="space-y-6">
                         {/* Nombre */}
                         <div>
-                            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                            <label htmlFor="nombre" className="block text-sm font-medium text-gray-700 mb-2">
                                 Nombre completo
                             </label>
                             <input
                                 type="text"
-                                id="name"
-                                name="name"
-                                value={formData.name}
+                                id="nombre"
+                                name="nombre"
+                                value={formData.nombre}
                                 onChange={handleInputChange}
                                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                 required
@@ -192,17 +203,47 @@ const EditarPerfil = () => {
 
                         {/* Email */}
                         <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                            <label htmlFor="correo" className="block text-sm font-medium text-gray-700 mb-2">
                                 Correo electrónico
                             </label>
                             <input
                                 type="email"
-                                id="email"
-                                name="email"
-                                value={formData.email}
+                                id="correo"
+                                name="correo"
+                                value={formData.correo}
                                 onChange={handleInputChange}
                                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                 required
+                            />
+                        </div>
+
+                        {/* Teléfono */}
+                        <div>
+                            <label htmlFor="telefono" className="block text-sm font-medium text-gray-700 mb-2">
+                                Teléfono
+                            </label>
+                            <input
+                                type="tel"
+                                id="telefono"
+                                name="telefono"
+                                value={formData.telefono}
+                                onChange={handleInputChange}
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            />
+                        </div>
+
+                        {/* Dirección */}
+                        <div>
+                            <label htmlFor="direccion" className="block text-sm font-medium text-gray-700 mb-2">
+                                Dirección
+                            </label>
+                            <textarea
+                                id="direccion"
+                                name="direccion"
+                                value={formData.direccion}
+                                onChange={handleInputChange}
+                                rows="3"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             />
                         </div>
 
@@ -213,14 +254,14 @@ const EditarPerfil = () => {
                             
                             <div className="space-y-4">
                                 <div>
-                                    <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                                    <label htmlFor="clave" className="block text-sm font-medium text-gray-700 mb-2">
                                         Nueva contraseña
                                     </label>
                                     <input
                                         type="password"
-                                        id="password"
-                                        name="password"
-                                        value={formData.password}
+                                        id="clave"
+                                        name="clave"
+                                        value={formData.clave}
                                         onChange={handleInputChange}
                                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                         minLength="6"
@@ -228,14 +269,14 @@ const EditarPerfil = () => {
                                 </div>
 
                                 <div>
-                                    <label htmlFor="password_confirmation" className="block text-sm font-medium text-gray-700 mb-2">
+                                    <label htmlFor="clave_confirmation" className="block text-sm font-medium text-gray-700 mb-2">
                                         Confirmar nueva contraseña
                                     </label>
                                     <input
                                         type="password"
-                                        id="password_confirmation"
-                                        name="password_confirmation"
-                                        value={formData.password_confirmation}
+                                        id="clave_confirmation"
+                                        name="clave_confirmation"
+                                        value={formData.clave_confirmation}
                                         onChange={handleInputChange}
                                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                         minLength="6"
