@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <!-- Background -->
+  <rect width="400" height="400" fill="#E5E7EB"/>
+  
+  <!-- Suit/Blazer -->
+  <rect x="100" y="280" width="200" height="120" fill="#065F74"/>
+  
+  <!-- Shirt -->
+  <rect x="140" y="280" width="120" height="80" fill="#FFFFFF"/>
+  
+  <!-- Tie -->
+  <rect x="190" y="280" width="20" height="80" fill="#111827"/>
+  
+  <!-- Face -->
+  <ellipse cx="200" cy="180" rx="65" ry="75" fill="#F3C5A7"/>
+  
+  <!-- Hair -->
+  <path d="M140 130 Q200 90 260 130 Q255 150 250 165 Q245 180 240 170 Q230 160 220 165 Q210 170 200 165 Q190 170 180 165 Q170 160 160 170 Q155 180 150 165 Q145 150 140 130" fill="#374151"/>
+  
+  <!-- Hair spikes -->
+  <path d="M160 130 Q165 115 170 130" fill="#374151"/>
+  <path d="M180 125 Q185 110 190 125" fill="#374151"/>
+  <path d="M200 120 Q205 105 210 120" fill="#374151"/>
+  <path d="M220 125 Q225 110 230 125" fill="#374151"/>
+  <path d="M240 130 Q245 115 250 130" fill="#374151"/>
+  
+  <!-- Glasses -->
+  <rect x="165" y="165" width="30" height="22" fill="#E0F2FE" stroke="#374151" stroke-width="3" rx="4"/>
+  <rect x="205" y="165" width="30" height="22" fill="#E0F2FE" stroke="#374151" stroke-width="3" rx="4"/>
+  <line x1="195" y1="176" x2="205" y2="176" stroke="#374151" stroke-width="3"/>
+  
+  <!-- Eyes behind glasses -->
+  <circle cx="180" cy="176" r="6" fill="#FFFFFF"/>
+  <circle cx="180" cy="176" r="4" fill="#3B82F6"/>
+  <circle cx="220" cy="176" r="6" fill="#FFFFFF"/>
+  <circle cx="220" cy="176" r="4" fill="#3B82F6"/>
+  
+  <!-- Eyebrows -->
+  <path d="M170 155 Q180 150 190 155" stroke="#374151" stroke-width="3" fill="none"/>
+  <path d="M210 155 Q220 150 230 155" stroke="#374151" stroke-width="3" fill="none"/>
+  
+  <!-- Nose -->
+  <path d="M195 190 Q200 200 205 190" stroke="#D1A584" stroke-width="2" fill="none"/>
+  
+  <!-- Mouth -->
+  <path d="M190 215 Q200 220 210 215" stroke="#EC4899" stroke-width="2" fill="none"/>
+</svg>
