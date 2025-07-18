@@ -199,7 +199,7 @@ const Layout = () => {
                             </Link>
                           ) : (
                             <Link 
-                              to="/cliente/perfil"
+                              to="/editar-perfil"
                               onClick={() => setIsDropdownOpen(false)}
                               className="dropdown-item flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200"
                             >
